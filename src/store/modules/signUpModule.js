@@ -8,7 +8,8 @@ export default {
         signupEnded: false,
         errors: null,
         successResponse: null,
-        sucessMessage: null
+        sucessMessage: null,
+        networkError: null
     },
     getters:{
         GET_SIGNUP_STARTED (state) {
@@ -25,6 +26,9 @@ export default {
         },
         GET_SUCCESS_MESSAGE(state){
             return state.sucessMessage
+        },
+        GET_SIGNUP_NETWORK_ERROR(state){
+            return state.networkError
         }
     },
     actions: {
@@ -38,15 +42,24 @@ export default {
         async registerUser({commit}, userData){
            commit('SET_SIGNUP_START', true)
             await axios.post(`${baseUrl}/auth/signup`, userData).then(response => {
-    
-                commit('SET_SIGNUP_START', false)
-                commit('SET_SIGNUP_END', true)
-                commit('SET_SIGNUP_SUCCESS_RESPONSE', response.data.user)
-                commit('SET_SUCCESS_MESSAGE', 'Account successfully created')
+                if(response.data){
+                    commit('SET_SIGNUP_START', false)
+                    commit('SET_SIGNUP_END', true)
+                    commit('SET_SIGNUP_SUCCESS_RESPONSE', response.data.user)
+                    commit('SET_SUCCESS_MESSAGE', 'Account successfully created')
+                }
             }).catch(error => {
-                commit('SET_ERROR_MESSAGES', error.response.data.user)
-                commit('SET_SIGNUP_START', false)
-                commit('SET_SIGNUP_END', true)
+                if(error.response){ //server errors
+                    commit('SET_ERROR_MESSAGES', error.response.data.user)
+                    commit('SET_SIGNUP_START', false)
+                    commit('SET_SIGNUP_END', true)
+                }
+                
+                if(error.request &&! error.response.data){ // check for internet connection
+                    commit('SET_SIGNUP_START', false)
+                    commit('SET_SIGNUP_END', true)
+                    commit('SET_NETWORK_CONNECTION_ERROR', 'There was a problem with your internet connection')
+                }
             })
             
             
@@ -68,6 +81,9 @@ export default {
         },
         SET_SIGNUP_SUCCESS_RESPONSE(state, payload) {
             state.successResponse = payload
+        },
+        SET_NETWORK_CONNECTION_ERROR(state, payload){
+            state.networkError = payload
         }
     }
 }
