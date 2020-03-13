@@ -10,7 +10,16 @@
                    </p>
                </div>
                <div class="col s12 m6 l6">
-                   <SignupForm/>
+                   <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s6"><a class="active" href="#signupform">Signup</a></li>
+                            <li class="tab col s6"><a  href="#loginform">Login</a></li>
+                        </ul>
+                    </div>
+                    <div id="forms">
+                        <SignupForm/>
+                        <LoginForm/>
+                    </div>
                </div>
            </div>
         </div>
@@ -19,11 +28,19 @@
 <script>
 import Nav from '../layout/NavBar'
 import SignupForm from './SignupComponent'
+import LoginForm from './LoginComponent'
 export default {
     name:'LandingPage',
     components: {
         Nav,
         SignupForm,
+        LoginForm
     }
 }
 </script>
+
+<style  scoped>
+   .tabs{
+       margin-top:22px;
+   }
+</style>

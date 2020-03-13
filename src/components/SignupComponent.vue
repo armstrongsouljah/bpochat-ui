@@ -1,11 +1,5 @@
 <template>
     <div class="row">
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s6"><a class="active" href="#signupform">Signup</a></li>
-                <li class="tab col s6"><a  href="#loginform">Login</a></li>
-            </ul>
-        </div>
        <!-- tab content -->
        <div  id="signupform" class="col s12">
             <form method="POST" @submit.prevent="handleSignup">
@@ -25,13 +19,11 @@
                 <span class="red-text" v-if="userPasswordError">{{userPasswordError}}</span>
             </div>
             <div class="col s12 input-field">
-               <input  type="submit" value="Signup" class="btn btn-waves btn-small"> <span v-if="signingUpStarted &&! signupFinished" class="fa-1x"><i class="fas fa-spinner fa-spin"></i></span>
+               <input  type="submit" value="Signup" class="btn btn-waves blue darken-2 btn-small"> <Loader :isLoading="signingUpStarted"/>
             </div>
             <span v-if="success" class="green-text right">{{success}}</span>
+            <span v-if="networkError" class="red-text">{{networkError}}</span>
         </form>
-       </div>
-       <div class="col s12" id="loginform">
-           Login to be implemented here.
        </div>
     </div>
 </template>
@@ -39,6 +31,7 @@
 /* eslint-disable no-unused-vars */
 import { mapActions, mapGetters } from 'vuex';
 import {required} from 'vuelidate';
+import Loader from '../layout/Spinner'
 export default {
     data(){
         return {
@@ -49,6 +42,9 @@ export default {
             usernameError: '',
             userPasswordError: ''
         }
+    },
+    components:{
+        Loader,
     },
     validations:{
        username: {required},
@@ -74,7 +70,8 @@ export default {
        ...mapGetters(['GET_ERRORS', 
                      'GET_SIGNUP_STARTED', 
                      'GET_SIGNUP_FINISHED', 
-                     'GET_SUCCESS_MESSAGE']), 
+                     'GET_SUCCESS_MESSAGE',
+                     'GET_SIGNUP_NETWORK_ERROR']), 
        errors(){
            return this.GET_ERRORS
        },
@@ -85,6 +82,9 @@ export default {
        },
        success (){
            return this.GET_SUCCESS_MESSAGE
+       },
+       networkError() {
+           return this.GET_SIGNUP_NETWORK_ERROR
        }
    },watch:{
        GET_ERRORS(newVal, oldVal) {
@@ -96,7 +96,7 @@ export default {
                this.emailError = ''
                this.userPasswordError = ''
 
-           }, 2000)
+           }, 5000)
        },
        GET_SIGNUP_STARTED(newVal, oldVal){
            console.log('signing up', newVal)
@@ -111,7 +111,13 @@ export default {
            setTimeout(()=> {
                this.$store.commit('SET_SUCCESS_MESSAGE', null)
 
-           }, 2000)
+           }, 5000)
+       },
+       GET_SIGNUP_NETWORK_ERROR(newVal, oldVal) {
+           setTimeout(()=> {
+               this.$store.commit('SET_NETWORK_CONNECTION_ERROR', null)
+
+           }, 4000)
        }
    }
 }
