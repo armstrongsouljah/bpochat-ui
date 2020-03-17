@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 import signupModule from './modules/signUpModule'
 import loginStoreModule from './modules/loginStoreModule'
+import inboxModule from './modules/inboxModule'
+import chatModule from './modules/sendChatModule'
 
 export default new Vuex.Store({
     state:{},
@@ -11,6 +13,8 @@ export default new Vuex.Store({
     actions:{},
     modules:{
         signupModule,
-        loginStoreModule
+        loginStoreModule,
+        inboxModule,
+        chatModule
     }
 })

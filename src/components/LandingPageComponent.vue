@@ -29,6 +29,7 @@
 import Nav from '../layout/NavBar'
 import SignupForm from './SignupComponent'
 import LoginForm from './LoginComponent'
+
 export default {
     name:'LandingPage',
     components: {
