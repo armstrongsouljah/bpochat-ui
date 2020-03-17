@@ -61,6 +61,7 @@ export default {
     actions: {
         async loginUser({commit}, userData){
            commit('SET_LOGIN_START', true)
+           localStorage.setItem('token', null)
            await axios.post(`${baseUrl}/auth/login`, userData)
                  .then(response => {
                       if(response) {
