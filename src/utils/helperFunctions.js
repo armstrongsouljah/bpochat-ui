@@ -21,7 +21,7 @@ export default{
     return username
    },
    getSerVerBase: ()=>{
-    const baseUrl='https:/bpochat-api.herokuapp.com'
+    const baseUrl='https://bpochat-api.herokuapp.com'
     const localUrl='http://localhost:8000'
         if (window.location.host.startsWith(localUrl)) return localUrl
         return baseUrl
