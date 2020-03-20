@@ -22,8 +22,10 @@ export default {
         ...mapActions(['sendMessage', ]),
         handleSendMessage() {
             this.sendMessage({
+                type: "chat.message",
                 message: this.message
             })
+            this.message = ''
         }
     }
 

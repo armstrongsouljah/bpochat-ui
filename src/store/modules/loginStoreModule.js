@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://bpochat-api.herokuapp.com'
+import helpers from '../../utils/helperFunctions'
 
 export default {
     state:{
@@ -61,10 +61,9 @@ export default {
     actions: {
         async loginUser({commit}, userData){
            commit('SET_LOGIN_START', true)
-           localStorage.setItem('token', null)
-           await axios.post(`${baseUrl}/auth/login`, userData)
+           await axios.post(`${helpers.getSerVerBase()}/auth/login`, userData)
                  .then(response => {
-                      if(response) {
+                      if(response.data) {
                           commit('SET_TOKEN', response.data.token)
                           localStorage.setItem('token', response.data.token)
                           commit('SET_LOGIN_START', false)
