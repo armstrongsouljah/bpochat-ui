@@ -61,7 +61,7 @@ export default {
     actions: {
         async loginUser({commit}, userData){
            commit('SET_LOGIN_START', true)
-           await axios.post(`${helpers.getSerVerBase()}/auth/login`, userData)
+           await axios.post(`${helpers.baseUrl}/auth/login`, userData)
                  .then(response => {
                       if(response.data) {
                           commit('SET_TOKEN', response.data.token)

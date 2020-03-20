@@ -41,7 +41,7 @@ export default {
         },
         async registerUser({commit}, userData){
            commit('SET_SIGNUP_START', true)
-            await axios.post(`${helpers.getSerVerBase()}/auth/signup`, userData).then(response => {
+            await axios.post(`${helpers.baseUrl}/auth/signup`, userData).then(response => {
                 if(response.data){
                     commit('SET_SIGNUP_START', false)
                     commit('SET_SIGNUP_END', true)

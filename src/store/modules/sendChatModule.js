@@ -68,7 +68,7 @@ export default {
             commit('SET_RECEIPIENT_NAME', user)
         },
        async fetchSelectedUserMessages({commit, state}){
-         await axios.get(`${helpers.getSerVerBase()}/messages/${state.receipient}/send`, helpers.config())
+         await axios.get(`${helpers.baseUrl}/messages/${state.receipient}/send`, helpers.config())
                .then(response => {
                    console.log(response)
                    let arr = Array.from(response.data)

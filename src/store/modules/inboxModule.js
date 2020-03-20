@@ -25,7 +25,7 @@ export default {
     actions: {
         async fetchUsers({commit}){
           commit('SET_IS_LOADING', true)
-          await axios.get(`${helpers.getSerVerBase()}/auth/users`, helpers.config())
+          await axios.get(`${helpers.baseUrl}/auth/users`, helpers.config())
                 .then(response => {
                     if(response.data){
                         commit('SET_USER_LIST', response.data)
