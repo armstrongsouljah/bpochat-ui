@@ -1,6 +1,6 @@
 // import AxiosCalls from '../../utils/AxiosCalls'
 import axios from 'axios';
-const baseUrl = 'https://bpochat-api.herokuapp.com'
+import helpers from '../../utils/helperFunctions'
 
 export default {
     state: {
@@ -41,7 +41,7 @@ export default {
         },
         async registerUser({commit}, userData){
            commit('SET_SIGNUP_START', true)
-            await axios.post(`${baseUrl}/auth/signup`, userData).then(response => {
+            await axios.post(`${helpers.getSerVerBase()}/auth/signup`, userData).then(response => {
                 if(response.data){
                     commit('SET_SIGNUP_START', false)
                     commit('SET_SIGNUP_END', true)

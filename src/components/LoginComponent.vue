@@ -85,7 +85,7 @@ export default {
               this.invalidLoginMessage = newVal.non_field_errors[0]
               setTimeout(()=> {
                   this.invalidLoginMessage = ''
-              },5000)
+              },3000)
               }
        }
    }
